@@ -22,6 +22,9 @@ const postDailytast = require('./Routes/salaryroute');
 const postProjects = require('./Routes/projects');
 const researches =require('./Routes/researches');
 const medical =require('./Routes/medicals');
+const cage =require('./Routes/cage');
+const area =require('./Routes/area');
+
 
 //App MiddleWare
 app.use(bodyparser.json());
@@ -37,6 +40,8 @@ app.use(postDailytast);
 app.use(postProjects);
 app.use(researches);
 app.use(medical);
+app.use(cage);
+app.use(area);
 //Import me later to dotEnv file
 
 //MongoDB Connect URL

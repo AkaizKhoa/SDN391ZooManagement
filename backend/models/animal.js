@@ -41,10 +41,13 @@ const animalSchema = new mongoose.Schema({
         type: String
 
     },
+
     cage: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "cage", require: true
+        ref: "cage", 
+        require: true
     },
+
     Date_Of_Treatment_And_Medical_Care: {
         type: String
     },

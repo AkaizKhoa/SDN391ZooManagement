@@ -9,7 +9,8 @@ const CageSchema = new Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User", require: true
+        ref: "User", 
+        require: true
     },
     isEmpty: {
         type: Boolean,
