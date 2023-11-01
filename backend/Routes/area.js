@@ -50,6 +50,8 @@ newArea.save((err)=>{
 //     });
 // });
 
+
+
 //Get Areas
 
 router.get('/area',(req,res)=>{
