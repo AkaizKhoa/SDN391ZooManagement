@@ -5,10 +5,12 @@ const bookingSchema =new mongoose.Schema({
         type:String,
         required:true
     },
+
     CustomerEmail:{
         type :String,
         required :true
     },
+
     MobileNumber:{
         type :String,
         required :true
@@ -22,7 +24,16 @@ const bookingSchema =new mongoose.Schema({
         type :String,
         required :true
     },
- 
+
+    Price:{
+        type: Number,
+        require: true
+    },
+    Quantiy:{
+        type: Number,
+        require: true
+    }
+   
    
 
 });
