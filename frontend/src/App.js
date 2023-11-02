@@ -30,10 +30,8 @@ import EmployeeDetails from "./components/PostDetails";
 //Research Management
 import AddEmployee from "./components/CreatePost";
 import EditResearch from "./components/EditResearch";
-import CreateResearch from "./components/CreateResearch";
 import CustomerResearchDash from "./components/CustomerResearchDash";
 import CreateCollaboration from "./components/CreateCollaboration";
-
 
 //Medical Management
 import MedicalDashboard from "./components/MedicalDashboard";
@@ -106,7 +104,6 @@ class TourApp extends Component {
           <Route path="/employee/details/:id" component={EmployeeDetails} />
 
           <Route path="/research/edit/:id" component={EditResearch} />
-          <Route path="/research/add" component={CreateResearch} />
           <Route
             path="/research/customerDash/"
             component={CustomerResearchDash}
@@ -115,7 +112,6 @@ class TourApp extends Component {
             path="/research/createCollaboration/"
             component={CreateCollaboration}
           />
-
 
           <Route path="/medicalDashboard" component={MedicalDashboard} />
           <Route path="/medical/create" component={CreateMedical} />

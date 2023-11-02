@@ -10,6 +10,7 @@ const Animals = require("../models/animal");
 //Invoke express.Router() To Send Requests To routes And Write http Requests
 
 const Cages = require("../models/Cage");
+const Users = require("../models/User");
 
 const router = express.Router();
 
@@ -61,20 +62,48 @@ router.get("/animal/:id", (req, res) => {
   });
 });
 
-//Get Animals
+//Get Animals by staff
 
-router.get("/animal", (req, res) => {
-  Animals.find().exec((err, animals) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
+router.get("/animal", async (req, res) => {
+  try {
+    // Fetch cage data first
+    // Then populate animals with cage data
+    const animals = await Animals.find()
+      .populate("cage", "name")
+      .populate("user", "name")
+      .exec();
+
     return res.status(200).json({
       success: true,
       existingAnimals: animals,
     });
-  });
+  } catch (err) {
+    return res.status(400).json({
+      error: err,
+    });
+  }
+});
+
+//Get Animals by zoo trainer
+router.get("/trainer/animal/:id", async (req, res) => {
+  const userid = req.params.id;
+  try {
+    // Fetch cage data first
+    // Then populate animals with cage data
+
+    const animals = await Animals.find({ user: userid })
+      .populate("cage", "name")
+      .exec();
+
+    return res.status(200).json({
+      success: true,
+      existingAnimals: animals,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      error: err,
+    });
+  }
 });
 
 //Update Animals
