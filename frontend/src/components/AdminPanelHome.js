@@ -84,7 +84,7 @@ class AdminPanelHome extends PureComponent {
               )}
               {isAdmin && (
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                  <Link to="./">
+                  <Link to="./StaffDash">
                     <div class="Services-box">
                       <i>
                         <img src={employeePic} alt="#" id="icons" />{" "}

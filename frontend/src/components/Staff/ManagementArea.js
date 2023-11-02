@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import axios from 'axios';
-import "../CSS/memberdashboard.css";
+import "../Staff/ManagementArea";
 import {Link} from 'react-router-dom';
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
@@ -113,7 +113,11 @@ jspdGenerator=()=>{
                       Admin Home
                     </a>
                     </button>
-                
+                    <button className="btn btn-success" style={{marginLeft:"10%", marginTop:"0",width:"150px"}} >
+                    <a href="/" style={{ textDecoration: "none", color: "white" }}>
+                      Add new area
+                    </a>
+                    </button>
                 
                 </div>
             </div>

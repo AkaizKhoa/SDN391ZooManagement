@@ -23,7 +23,7 @@ import membersbooking from "./components/MemberBooking";
 
 //Employee Management
 import AdminPanelHome from "./components/AdminPanelHome";
-import EmployeeDashboard from "./components/EmployeeDash";
+import EmployeeDashboard from "./components/Admin/EmployeeDash";
 import EditEmployee from "./components/EditPost";
 import EmployeeDetails from "./components/PostDetails";
 
@@ -49,7 +49,6 @@ import RequestBooking from "./components/RequestBooking";
 import AllAdoptions from "./components/AllAdoptions";
 import AdoptionDetails from "./components/AdoptionDetails";
 import EditAdoptionDetails from "./components/UpdateAdoption";
-import CreateAdoption from "./components/AddAdoption";
 
 //Animal Management
 import AnimalDashboard from "./components/AnimalDashboard";
@@ -58,9 +57,11 @@ import UpdateAnimalPortfolio from "./components/EditAnimal";
 import AnimalDetails from "./components/AnimalDetails";
 import AnimalsforAdoption from "./components/AnimalsforAdoption";
 import MemberAdoptedAnimals from "./components/MemberAdoptedAnimals";
+import CreateAdoption from "./components/AddAdoption"
+import ManagementArea from "./components/Staff/ManagementArea";
+import ManagementAccountTrainer from "./components/Staff/ManagementAccountTrainer";
+import StaffDash from "./components/Admin/StaffDash"
 
-import ManagementArea from "./components/ManagementArea";
-import ManagementAccountTrainer from "./components/ManagementAccountTrainer";
 
 import Register from "./components/Register";
 import CategoryDashBoard from "./components/Category/CategoryDashBoard";
@@ -99,6 +100,10 @@ class TourApp extends Component {
           <Route path="/adminpanelhome" component={AdminPanelHome} />
 
           <Route path="/EmployeeDash" component={EmployeeDashboard} />
+          <Route
+            path="/StaffDash"
+            component={StaffDash}
+          />
           <Route path="/edit/employee/:id" component={EditEmployee} />
           <Route path="/employee/add" component={AddEmployee} />
           <Route path="/employee/details/:id" component={EmployeeDetails} />
