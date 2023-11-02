@@ -49,7 +49,6 @@ import RequestBooking from "./components/RequestBooking";
 import AllAdoptions from "./components/AllAdoptions";
 import AdoptionDetails from "./components/AdoptionDetails";
 import EditAdoptionDetails from "./components/UpdateAdoption";
-import CreateAdoption from "./components/AddAdoption";
 
 //Animal Management
 import AnimalDashboard from "./components/AnimalDashboard";
@@ -58,9 +57,9 @@ import UpdateAnimalPortfolio from "./components/EditAnimal";
 import AnimalDetails from "./components/AnimalDetails";
 import AnimalsforAdoption from "./components/AnimalsforAdoption";
 import MemberAdoptedAnimals from "./components/MemberAdoptedAnimals";
-
-import ManagementArea from "./components/ManagementArea";
-import ManagementAccountTrainer from "./components/ManagementAccountTrainer";
+import CreateAdoption from "./components/AddAdoption"
+import ManagementArea from "./components/Staff/ManagementArea";
+import ManagementAccountTrainer from "./components/Staff/ManagementAccountTrainer";
 import StaffDash from "./components/Admin/StaffDash"
 
 

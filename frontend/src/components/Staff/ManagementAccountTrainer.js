@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 
-import '../CSS/EmployeeDashboard.css'
+import '../Staff/ManagementAccountTrainer'
 import 'jspdf-autotable'
 
 
