@@ -88,9 +88,6 @@ router.get("/animal", async (req, res) => {
 router.get("/trainer/animal/:id", async (req, res) => {
   const userid = req.params.id;
   try {
-    // Fetch cage data first
-    // Then populate animals with cage data
-
     const animals = await Animals.find({ user: userid })
       .populate("cage", "name")
       .exec();

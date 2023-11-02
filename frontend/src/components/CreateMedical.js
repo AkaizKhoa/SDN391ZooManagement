@@ -8,26 +8,19 @@ import SplitButton from "react-bootstrap/SplitButton";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import Select from "react-select";
-
+import { toast } from "react-toastify";
 export default class CreateMedical extends Component {
   constructor(props) {
     super(props);
-    this.validateform = this.validateform.bind(this);
     this.state = {
-      vname: "",
-      zname: "",
       animalID: "",
-      injID: "",
       sinfo: "",
       posts: [],
       zooAnimal: [],
       userData: null, // Khởi tạo userData là null
     };
-    this.retrievePosts();
-    this.ref1 = React.createRef();
-    this.ref2 = React.createRef();
+    // this.retrievePosts();
     this.ref3 = React.createRef();
-    this.ref4 = React.createRef();
     this.ref5 = React.createRef();
   }
 
@@ -50,17 +43,6 @@ export default class CreateMedical extends Component {
     });
   }
 
-  retrievePosts() {
-    axios.get("/posts").then((res) => {
-      if (res.data.success) {
-        this.setState({
-          posts: res.data.existingPosts,
-        });
-        console.log(this.state.posts);
-      }
-    });
-  }
-
   handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -70,85 +52,38 @@ export default class CreateMedical extends Component {
     });
   };
 
-  onsubmit = (e) => {
-    e.preventDefault();
+  onsubmit = async (e) => {
+    const user = JSON.parse(localStorage.getItem("userData"));
+    e.preventDefault(); // Prevent the default form submission behavior
+    try {
+      const { animalID, sinfo } = this.state;
+      const data = {
+        user: user.id,
+        animal: animalID,
+        sinfo: sinfo,
+      };
+      console.log(data);
 
-    const { vname, zname, animalID, injID, sinfo } = this.state;
-    const data = {
-      vname: vname,
-      zname: zname,
-      animalID: animalID,
-      injID: injID,
-      sinfo: "eye checkup",
-    };
-    console.log(data);
-
-    axios.post("http://localhost:8015/medical/add", data).then((res) => {
-      if (res.data.success) {
-        alert(`New medical Record created `);
-
-        this.setState({
-          vname: "",
-          zname: "",
-          animalID: "",
-          injID: "",
-          sinfo: "",
-        });
+      if (data.animalID !== "" && data.sinfo !== "") {
+        const response = await axios.post(
+          "http://localhost:8015/medical/add",
+          data
+        );
+        if (response.status === 200) {
+          toast.success("thành công");
+          this.props.history.push("/medicalDashboard");
+        }
+      } else {
+        toast.error("can't empty");
       }
-    });
-  };
-
-  Demo = () => {
-    this.ref1.current.value = "Test1";
-    this.ref2.current.value = "Test2";
-    this.ref3.current.value = "Test3";
-    this.ref4.current.value = "Test4";
-    this.ref5.current.value = "Test5@";
-
-    this.state.vname = "Test1";
-    this.state.zname = "Test2";
-    this.state.animalID = "Test3";
-    this.state.injID = "Test4";
-    this.state.sinfo = "Test5";
-  };
-
-  validateform(e) {
-    if (
-      this.state.vname === "" ||
-      this.state.zname === "" ||
-      this.state.injID === "" ||
-      this.state.sinfo === ""
-    ) {
-      alert("All the inputs must be filled!");
-    } else {
-      this.onSubmit(e);
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   render() {
     const handleSelect = (e) => {
-      console.log(e);
-
-      this.state.vname = e;
-      console.log("Helloooo: " + this.state.vname);
-      this.state.vname = e;
-      this.ref1.current.value = e;
-    };
-    const handleSelect1 = (e) => {
-      console.log(e);
-
-      this.state.zname = e;
-      console.log("Helloooo: " + this.state.vname);
-
-      this.ref2.current.value = e;
-    };
-
-    const handleSelect2 = (e) => {
-      console.log(e);
-
       this.state.animalID = e;
-      console.log("Helloooo: " + this.state.animalID);
-
       this.ref3.current.value = e;
     };
 
@@ -164,115 +99,21 @@ export default class CreateMedical extends Component {
             style={{ backgroundColor: "white", width: "80%", margin: "0 auto" }}
           >
             <form className=" needs-validation " noValidate id="RandiForm1">
-              {/* <div className="form-group" style={{marginBottom:'15px'}}>
-                        <label style={{marginBottom:'5px'}}>Vetenarian Name</label>
-                        <input type="text"
-                        className="form-control"
-                        ref={this.ref1}
-                        name="vname"
-                        placeholder="Enter the vetenarian name"
-                        value={this.state.vname}
-                        onChange={this.handleInputChange}/>
-                        </div> */}
-
-              <div className="form-group">
-                <DropdownButton
-                  style={{ marginLeft: "-100px" }}
-                  align="center"
-                  title="Veterinarian"
-                  id="dropdown-menu-align-end"
-                  onSelect={handleSelect}
-                >
-                  <div>
-                    {this.state.posts.map((posts) => (
-                      <div>
-                        {posts.employeeType === "Veterinarian" && (
-                          <Dropdown.Item eventKey={posts.userName}>
-                            {posts.userName}
-                          </Dropdown.Item>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </DropdownButton>
-                <label style={{ marginBottom: "5px" }} id="RandiForm1">
-                  Veterinarian
-                </label>
-                <input
-                  type="text"
-                  style={{ marginLeft: "-100px" }}
-                  id="randimal"
-                  className="form-control"
-                  name="Attended_Zookeeper"
-                  placeholder="Enter The Veterinarian:"
-                  value={this.state.vname}
-                  onChange={this.handleInputChange}
-                  ref={this.ref1}
-                />
-              </div>
-
-              <div className="form-group">
-                <DropdownButton
-                  style={{ marginLeft: "-100px" }}
-                  align="center"
-                  title="Attended Zookeeper"
-                  id="dropdown-menu-align-end"
-                  onSelect={handleSelect1}
-                >
-                  <div>
-                    {this.state.posts.map((posts) => (
-                      <div>
-                        {posts.employeeType === "ZooKeeper" && (
-                          <Dropdown.Item eventKey={posts.userName}>
-                            {posts.userName}
-                          </Dropdown.Item>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </DropdownButton>
-                <label style={{ marginBottom: "5px" }} id="RandiForm1">
-                  Attended Zookeeper
-                </label>
-                <input
-                  type="text"
-                  style={{ marginLeft: "-100px" }}
-                  id="randimal"
-                  className="form-control"
-                  name="Attended_Zookeeper"
-                  placeholder="Enter The Last Attended Zookeeper:"
-                  value={this.state.zname}
-                  onChange={this.handleInputChange}
-                  ref={this.ref2}
-                />
-              </div>
-
-              {/* <div className="form-group" style={{marginBottom:'15px'}}>
-                        <label style={{marginBottom:'5px'}}>Zoo Keeper Name</label>
-                        <input type="text"
-                        className="form-control"
-                        ref={this.ref2}
-                        name="zname"
-                        placeholder="Enter the Zoo Keeper Name"
-                        value={this.state.zname}
-                        onChange={this.handleInputChange}/>
-                        </div> */}
-
               <div className="form-group">
                 <DropdownButton
                   style={{ marginLeft: "-100px" }}
                   align="center"
                   title="Animal ID"
                   id="dropdown-menu-align-end"
-                  onSelect={handleSelect2}
+                  onSelect={handleSelect}
                 >
                   <div>
                     {this.state.zooAnimal.map(
                       (
                         zooAnimal //
                       ) => (
-                        <Dropdown.Item eventKey={zooAnimal.Animal_ID}>
-                          {zooAnimal.Animal_ID}
+                        <Dropdown.Item eventKey={zooAnimal._id}>
+                          {zooAnimal.Animal_Name}
                         </Dropdown.Item>
                       )
                     )}
@@ -294,37 +135,9 @@ export default class CreateMedical extends Component {
                 />
               </div>
 
-              {/* <div className="form-group" style={{marginBottom:'15px'}}>
-                        <label style={{marginBottom:'5px'}}>Animal ID</label>
-                        <input type="text"
-                        className="form-control"
-                        ref={this.ref3}
-                        name="animalID"
-                        placeholder="Enter the animalID"
-                        value={this.state.animalID}
-                        onChange={this.handleInputChange}/>
-                        </div> */}
-
               <div className="form-group" style={{ marginBottom: "15px" }}>
                 <label style={{ marginBottom: "5px" }} id="RandiForm1">
-                  Injection ID
-                </label>
-                <input
-                  type="text"
-                  style={{ marginLeft: "-100px" }}
-                  id="randimal"
-                  className="form-control"
-                  ref={this.ref4}
-                  name="injID"
-                  placeholder="Enter the Injection ID"
-                  value={this.state.injID}
-                  onChange={this.handleInputChange}
-                />
-              </div>
-
-              <div className="form-group" style={{ marginBottom: "15px" }}>
-                <label style={{ marginBottom: "5px" }} id="RandiForm1">
-                  Surjery Info{" "}
+                  Surjery Info
                 </label>
                 <input
                   type="text"
@@ -334,8 +147,11 @@ export default class CreateMedical extends Component {
                   ref={this.ref5}
                   name="sinfo "
                   placeholder="Enter the Surgery Info "
-                  defualtValue={this.state.sinfo}
-                  onChange={this.handleInputChange}
+                  defaultValue={this.state.sinfo}
+                  onChange={(event) => {
+                    const inputValue = event.target.value;
+                    this.setState({ sinfo: inputValue });
+                  }}
                 />
               </div>
               <br />
@@ -346,20 +162,10 @@ export default class CreateMedical extends Component {
                   className="btn btn-success"
                   type="submit"
                   style={{ marginBottom: "15px", marginLeft: "50px" }}
-                  onClick={this.validateform}
+                  onClick={this.onsubmit}
                 >
                   <i className="far fa-check-square"></i>
                   &nbsp; Submit Medical Report
-                </button>
-
-                <button
-                  className="btn btn-success"
-                  style={{ marginTop: "-16px", marginLeft: "400px" }}
-                  onClick={this.Demo}
-                  type="button"
-                >
-                  <i className="far fa-check-square"></i>
-                  &nbsp; Demo
                 </button>
 
                 <button
@@ -370,8 +176,7 @@ export default class CreateMedical extends Component {
                     href="/medicalDashboard"
                     style={{ textDecoration: "none", color: "white" }}
                   >
-                    {" "}
-                    Dashboard{" "}
+                    Dashboard
                   </a>
                 </button>
               </div>

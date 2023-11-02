@@ -27,13 +27,25 @@ export default class Home extends Component {
 
   retrieveAnimal() {
     const user = JSON.parse(localStorage.getItem("userData"));
-    axios.get(`http://localhost:8015/trainer/animal/${user.id}`).then((res) => {
-      if (res.data.success) {
-        this.setState({
-          zooAnimal: res.data.existingAnimals,
+    if (user.isTrainer) {
+      axios
+        .get(`http://localhost:8015/trainer/animal/${user.id}`)
+        .then((res) => {
+          if (res.data.success) {
+            this.setState({
+              zooAnimal: res.data.existingAnimals,
+            });
+          }
         });
-      }
-    });
+    } else if (user.isStaff) {
+      axios.get("http://localhost:8015/animal").then((res) => {
+        if (res.data.success) {
+          this.setState({
+            zooAnimal: res.data.existingAnimals,
+          });
+        }
+      });
+    }
   }
 
   onDelete = (id) => {
