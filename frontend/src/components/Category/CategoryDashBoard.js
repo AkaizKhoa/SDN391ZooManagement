@@ -12,6 +12,8 @@ class CategoryDashBoard extends Component {
     this.state = {
       categories: [],
       isPopupOpen: false,
+      isOverPlay: false,
+      newCategoryName: "",
     };
   }
 
@@ -32,9 +34,31 @@ class CategoryDashBoard extends Component {
   togglePopup = () => {
     this.setState((prevState) => ({
       isPopupOpen: !prevState.isPopupOpen,
+      isOverPlay: !prevState.isOverPlay,
     }));
-    console.log(1);
   };
+
+  handleCategoryNameChange = (event) => {
+    this.setState({ newCategoryName: event.target.value });
+  };
+
+  addNewCategory = () => {
+    const { newCategoryName } = this.state;
+    axios
+      .post("http://localhost:8015/category/save", {
+        categoryName: newCategoryName,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          this.getAllCategory();
+          this.togglePopup();
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   //End of function report
 
   render() {
@@ -69,17 +93,39 @@ class CategoryDashBoard extends Component {
               </h1>
             </div>
           </div>
+
           {this.state.isPopupOpen && (
-            <div className="popup">
-              <div className="popup-content">
-                <button
-                  className="close"
-                  onClick={this.togglePopup} // Close the popup
-                >
-                  Close
-                </button>
+            <>
+              <div className="overplay"></div>
+              <div className="popup">
+                <div className="popup-content">
+                  <label>Category Name</label>
+                  <div>
+                    <input
+                      required
+                      type="text"
+                      name="categoryname"
+                      placeholder="category name"
+                      value={this.state.newCategoryName}
+                      onChange={this.handleCategoryNameChange}
+                    />
+                  </div>
+
+                  <button
+                    className="close"
+                    onClick={this.togglePopup} // Close the popup
+                  >
+                    Close
+                  </button>
+                  <button
+                    className="add"
+                    onClick={this.addNewCategory} // Close the popup
+                  >
+                    Add
+                  </button>
+                </div>
               </div>
-            </div>
+            </>
           )}
 
           <br />
