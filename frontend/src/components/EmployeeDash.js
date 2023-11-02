@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../CSS/EmployeeDashboard.css'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+import { toast } from 'react-toastify';
 
 
 
@@ -16,7 +17,7 @@ export default class Home extends Component {
     super(props);
 
     this.state = {
-      posts: [],
+      accounts: [],
       lastID: "10"
     };
 
@@ -24,34 +25,59 @@ export default class Home extends Component {
 
 
   componentDidMount() {
-    this.retrievePosts();
+    this.getAllAccounts();
     localStorage.setItem('foo', this.state.lastID);
   }
 
-  retrievePosts() {
-    axios.get("http://localhost:8015/posts").then(res => {
+  getAllAccounts() {
+    axios.get("http://localhost:8015/accounts").then(res => {
       if (res.data.success) {
         this.setState({
-          posts: res.data.existingPosts
+          accounts: res.data.existingAccount
         })
-        console.log(this.state.posts)
+        console.log(res.data)
       }
     })
   }
 
-  onDelete = (id) => {
-    axios.delete(`http://localhost:8015/post/delete/${id}`).then((res) => {
-      alert("Delete Successfully");
-      this.retrievePosts()
+  onUpdateUser = (id) => {
+    axios.put(`http://localhost:8015/account/updateUser/${id}`).then((res) => {
+      toast("Change Role Successfully");
+      this.getAllAccounts()
     })
   }
 
-  filterData(posts, searchKey) {
-    const result = posts.filter((post) =>
-      post.eID.includes(searchKey)
+
+  onUpdateTrainer = (id) => {
+    axios.put(`http://localhost:8015/account/updateTrainer/${id}`).then((res) => {
+      toast("Change Role Successfully");
+      this.getAllAccounts()
+    })
+  }
+
+  
+  onUpdateStaff = (id) => {
+    axios.put(`http://localhost:8015/account/updateStaff/${id}`).then((res) => {
+      toast("Change Role Successfully");
+      this.getAllAccounts()
+    })
+  }
+
+
+
+
+ 
+
+
+
+
+  filterData(accounts, searchKey) {
+    const result = accounts.filter((account) =>
+      account.name.includes(searchKey)
     )
 
-    this.setState({ posts: result })
+    console.log(result);
+    this.setState({ accounts: result })
 
   }
 
@@ -60,34 +86,13 @@ export default class Home extends Component {
     const searchKey = e.currentTarget.value
 
 
-    axios.get("/posts").then(res => {
+    axios.get("/accounts").then(res => {
       if (res.data.success) {
-        this.filterData(res.data.existingPosts, searchKey)
+        this.filterData(res.data.existingAccount, searchKey)
       }
     })
   }
 
-  //Report Generate Function onClick
-  jspdGenerator = () => {
-
-
-    //Create document obj
-    var doc = new jsPDF("p", "pt", "c3")
-
-
-    doc.html(document.querySelector("#shas99Table"), {
-
-      callback: function (pdf) {
-
-        pdf.save("AllEmployeeDetails.pdf");
-
-      }
-
-    });
-
-
-  }
-  //End of function report 
 
 
   render() {
@@ -102,7 +107,17 @@ export default class Home extends Component {
             </b>
               <div className="employeeImg"> </div>
             </div>
+
+            <div  id="empbtns" style={{ marginTop: '30px', marginBottom: '30px', marginLeft: '30px', width: '100%' , display: 'flex', justifyContent: 'start'}}>
+            <button className="btn btn-success" style={{ marginLeft: "0", marginTop: "0px", width: "150px" }} >
+              <a href="/adminpanelhome" style={{ textDecoration: "none", color: "white" }}>
+                Admin Home
+              </a>
+            </button>
+          </div>
+
             <div className="col-lg-3 mt-2 mb-2" id="shas99SearchBar">
+              
               <input style={{ color: '#000' }}
                 className="form-control"
                 type="search"
@@ -119,42 +134,42 @@ export default class Home extends Component {
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Employee ID</th>
-                <th scope="col">Username</th>
-                <th scope="col">Firstname</th>
-                <th scope="col">Lastname</th>
-                <th scope="col">E-mail</th>
-                <th scope="col">Address</th>
-                <th scope="col">Employee Type</th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Trainer</th>
+                <th scope="col">Staff</th>
+                <th scope="col">User</th>
                 <th scope="col">Date Of Birth</th>
-                <th></th>
+                <th scope="col">Action</th>
+
               </tr>
             </thead>
             <tbody>
-              {this.state.posts.map((posts, index) => (
+              {this.state.accounts.map((accounts, index) => (
                 <tr>
                   <th >{index + 1}</th>
                   <td>
-                    <a href={`/employee/details/${posts._id}`}>
-                      {"E" + posts.eID}
-                    </a>
-                    {/* {this.state.lastID = posts.eID} */}
-                    {localStorage.setItem('foo', posts.eID)}
+                      {"E" + accounts._id}
+                    {/* {this.state.lastID = accounts.eID} */}
+                    {localStorage.setItem('foo', accounts.eID)}
                   </td>
-                  <td >{posts.userName}</td>
-                  <td>{posts.firstName}</td>
-                  <td>{posts.lastName}</td>
-                  <td>{posts.email}</td>
-                  <td>{posts.address}</td>
-                  <td>{posts.employeeType}</td>
-                  <td>{posts.DOB}</td>
+                  <td >{accounts.name}</td>
+                  <td>{accounts.email}</td>
+                  <td>{accounts.isTrainer ? 'Trainer' : 'Not a Trainer'}</td>
+                  <td>{accounts.isStaff ? 'Staff' : 'Not a Staff'}</td>
+                  <td>{accounts.isUser ? 'User' : 'Not a User'}</td>
+                  <td>{accounts.date}</td>
                   <td>
-                    <a className="btn btn-warning" href={`/edit/employee/${posts._id}`} id="shasEdit">
-                      <i className="fas fa-edit"></i>&nbsp;Edit
+                   
+                  <a className="btn btn-warning" href="#" onClick={() => this.onUpdateUser(accounts._id)} id="shasDelete">
+                     &nbsp;SetUser
                     </a>
-                    {/* &nbsp; */}
-                    <a className="btn btn-danger" href="#" onClick={() => this.onDelete(posts._id)} id="shasDelete">
-                      <i className="far fa-trash-alt"></i>&nbsp;Delete
+                    <a className="btn btn-danger" href="#" onClick={() => this.onUpdateTrainer(accounts._id)} id="shasDelete">
+                     &nbsp;SetTrainer
+                    </a>
+                    <a className="btn btn-primary" href="#" onClick={() => this.onUpdateStaff(accounts._id)} id="shasDelete">
+                     &nbsp;SetStaff
                     </a>
                   </td>
                 </tr>
@@ -167,24 +182,7 @@ export default class Home extends Component {
 
 
           </table>
-          <div id="empbtns" style={{ marginTop: '30px', marginBottom: '30px', width: '100%' , display: 'flex', justifyContent: 'space-around'}}>
-            <button className="btn btn-success" style={{ marginLeft: "0", marginTop: "0px", width: "150px" }} >
-              <a href="/adminpanelhome" style={{ textDecoration: "none", color: "white" }}>
-                Admin Home
-              </a>
-            </button>
-
-
-            {/* Copy generate from here */}
-
-
-            {/* <button className="btn btn-success" onClick={this.jspdGenerator} style={{ margin: '2 0', marginLeft: '30%' }}>Generate Employee Report</button> */}
-
-            <button className="btn btn-success" style={{ marginLeft: '560px' }}><a href="/employee/add" style={{ textDecoration: 'none', color: 'white' }}>Add New Employee</a>
-
-            </button>
-
-          </div>
+        
         </div>
         {/* Iwara wena thana */}
 
