@@ -34,12 +34,7 @@ import CreateResearch from "./components/CreateResearch";
 import CustomerResearchDash from "./components/CustomerResearchDash";
 import CreateCollaboration from "./components/CreateCollaboration";
 
-//Project Management
-import ProjectsHome from "./components/ProjectsHome";
-import AddProject from "./components/ProjectCreate";
-import ProjectDetails from "./components/ProjectSearch";
-import EditDetails from "./components/ProjectEdit";
-import ProjectReport from "./components/ProjectReports";
+
 //Medical Management
 import MedicalDashboard from "./components/MedicalDashboard";
 import CreateMedical from "./components/CreateMedical";
@@ -121,11 +116,6 @@ class TourApp extends Component {
             component={CreateCollaboration}
           />
 
-          <Route path="/ProjectsHome" component={ProjectsHome} />
-          <Route path="/project/add" component={AddProject} />
-          <Route path="/project/find" component={ProjectDetails} />
-          <Route path="/project/edit/:id" component={EditDetails} />
-          <Route path="/project/report/:id" component={ProjectReport} />
 
           <Route path="/medicalDashboard" component={MedicalDashboard} />
           <Route path="/medical/create" component={CreateMedical} />

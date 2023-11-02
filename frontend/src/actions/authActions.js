@@ -21,22 +21,24 @@ import {
 
 //Check if user is already logged in
 export const isAuth = () => (dispatch) => {
+  axios
+    .get("/api/users/authchecker", { withCredentials: true })
+    .then((res) => {
+      // Lưu dữ liệu từ phản hồi vào Local Storage
 
-    axios
-    .get("/api/users/authchecker",{withCredentials:true})
-    .then((res) =>
+      // Dispatch action với dữ liệu từ phản hồi
       dispatch({
         type: AUTH_SUCCESS,
         payload: res.data
-      })
-    )
+      });
+    })
     .catch((err) => {
       dispatch({
         type: AUTH_FAIL
       });
     });
+};
 
-}
 
 //Register New User
 export const register = ({ name, email, password }) => (dispatch) => {
@@ -53,6 +55,7 @@ export const register = ({ name, email, password }) => (dispatch) => {
   axios
     .post("/api/users/register", body, headers)
     .then((res) =>{
+
       dispatch(returnStatus(res.data, res.status, 'REGISTER_SUCCESS'));
       dispatch({ type: IS_LOADING })
     })
@@ -80,7 +83,8 @@ export const login = ({ email, password }) => (dispatch) => {
   axios
     .post("/api/users/login", body, headers)
     .then((res) => {
-      console.log(res);
+      localStorage.setItem('userData', JSON.stringify(res.data));
+      
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data
@@ -99,16 +103,17 @@ export const login = ({ email, password }) => (dispatch) => {
 
 //Logout User and Destroy session
 export const logout = () => (dispatch) => {
-
-    axios
+  axios
     .delete("/api/users/logout", { withCredentials: true })
-    .then((res) =>
+    .then((res) => {
+      // Xóa dữ liệu từ Local Storage
+      localStorage.removeItem('userData');
+      
       dispatch({
         type: LOGOUT_SUCCESS,
-      })
-    )
+      });
+    })
     .catch((err) => {
       console.log(err);
     });
-
 }

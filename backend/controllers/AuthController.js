@@ -5,8 +5,6 @@ const { registerSchema, loginSchema } = require('../utils/userValidations');
 
 
 exports.isAuth = (req,res,next) => {
-  const sessUser = req.session.user;
-  console.log(sessUser);
   if(sessUser) {
       next();
   }
@@ -69,7 +67,7 @@ exports.loginUser = (req, res) => {
       bcrypt.compare(password, user.password).then((isMatch) => {
         if (!isMatch) return res.status(400).json("Incorrect Email or Password");
 
-        const sessUser = { id: user.id, name: user.name, email: user.email };
+        const sessUser = { id: user.id, name: user.name, email: user.email, isAdmin: user.isAdmin,  isStaff: user.isStaff,  isTrainer: user.isTrainer,  isUser: user.isUser};
         req.session.user = sessUser; // Auto saves session data in mongo store
 
         res.json(sessUser); // sends cookie with sessionID automatically in response
@@ -92,6 +90,7 @@ exports.logoutUser = (req, res) => {
 
 exports.authChecker = (req, res) => {
   const sessUser = req.session.user;
+
   if (sessUser) {
     return res.json(sessUser);
   } else {

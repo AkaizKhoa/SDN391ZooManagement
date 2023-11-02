@@ -15,10 +15,34 @@ class AdminPanelHome extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {};
+
+    this.state = {
+      userData: null // Khởi tạo userData là null
+    };
   }
 
+
+  componentDidMount() {
+    // Lấy dữ liệu từ Local Storage
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData) {
+      this.setState({ userData });
+    }
+  }
+
+
   render() {
+    
+
+    const isAdmin = this.state.userData && this.state.userData.isAdmin;
+    console.log(this.state.userData);
+    const isStaff = this.state.userData && this.state.userData.isStaff;
+
+    const isTrainer = this.state.userData && this.state.userData.isTrainer;
+
+
+
+
     return (
       <div className="admin-body" id="admin-id">
         <div
@@ -40,43 +64,53 @@ class AdminPanelHome extends PureComponent {
               </div>
             </div>
             <div class="row">
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                <Link to="./EmployeeDash">
-                  <div class="Services-box">
-                    <i>
-                      <img src={employeePic} alt="#" id="icons" />{" "}
-                    </i>
-                    <h3> Quản lí tất cả nhân viên</h3> <br />
-                    <p>Quản lí tất cả nhân viên </p>
-                  </div>
-                </Link>
-              </div>
 
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                <Link to="./ManagementAccountTrainer">
-                  <div class="Services-box">
-                    <i>
-                      <img src={employeePic} alt="#" id="icons" />{" "}
-                    </i>
-                    <h3> Quản lí Zoo Trainer</h3> <br />
-                    <p>Quản lí nhân viên Zoo Trainer </p>
-                  </div>
-                </Link>
-              </div>
 
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                <Link to="./EmployeeDash">
-                  <div class="Services-box">
-                    <i>
-                      <img src={employeePic} alt="#" id="icons" />{" "}
-                    </i>
-                    <h3> Quản lí Staff Account</h3> <br />
-                    <p>Quản lí nhân viên Staff Account </p>
-                  </div>
-                </Link>
-              </div>
 
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+
+              {isAdmin && (
+
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <Link to="./EmployeeDash">
+                    <div class="Services-box">
+                      <i>
+                        <img src={employeePic} alt="#" id="icons" />{" "}
+                      </i>
+                      <h3> Quản lí tất cả nhân viên</h3> <br />
+                      <p>Quản lí tất cả nhân viên </p>
+                    </div>
+                  </Link>
+                </div>
+              )}
+              {isStaff && (
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <Link to="./ManagementAccountTrainer">
+                    <div class="Services-box">
+                      <i>
+                        <img src={employeePic} alt="#" id="icons" />{" "}
+                      </i>
+                      <h3> Quản lí Zoo Trainer</h3> <br />
+                      <p>Quản lí nhân viên Zoo Trainer </p>
+                    </div>
+                  </Link>
+                </div>
+              )}
+              {isAdmin && (
+
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <Link to="./">
+                    <div class="Services-box">
+                      <i>
+                        <img src={employeePic} alt="#" id="icons" />{" "}
+                      </i>
+                      <h3> Quản lí Staff Account</h3> <br />
+                      <p>Quản lí nhân viên Staff Account </p>
+                    </div>
+                  </Link>
+                </div>
+              )}
+
+              {/* <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                 <Link to="./adminprofiledash">
                   <div class="Services-box">
                     <i>
@@ -86,31 +120,42 @@ class AdminPanelHome extends PureComponent {
                     <p>Quản lí thông tin admin</p>
                   </div>
                 </Link>
-              </div>
+              </div> */}
 
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                <Link to="./ManagementArea">
-                  <div class="Services-box">
-                    <i>
-                      <img src={userPic} alt="#" id="icons" />
-                    </i>
-                    <h3>Quản lí thông tin khu vực(Staff) </h3>
-                    <p>Quản lí thông tin khu vực </p>
-                  </div>
-                </Link>
-              </div>
+              {isStaff && (
 
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                <Link to="./medicalDashboard">
-                  <div class="Services-box">
-                    <i>
-                      <img src={medicalPic} alt="#" id="icons" />
-                    </i>
-                    <h3>Theo dõi sức khỏe Animal</h3>
-                    <p>Tạo các ghi nhận về sức khỏe </p>
-                  </div>
-                </Link>
-              </div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <Link to="./ManagementArea">
+                    <div class="Services-box">
+                      <i>
+                        <img src={userPic} alt="#" id="icons" />
+                      </i>
+                      <h3>Quản lí thông tin khu vực(Staff) </h3>
+                      <p>Quản lí thông tin khu vực </p>
+                    </div>
+                  </Link>
+                </div>
+              )}
+
+
+              {isTrainer && (
+
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <Link to="./medicalDashboard">
+                    <div class="Services-box">
+                      <i>
+                        <img src={medicalPic} alt="#" id="icons" />
+                      </i>
+                      <h3>Theo dõi sức khỏe Animal</h3>
+                      <p>Tạo các ghi nhận về sức khỏe </p>
+                    </div>
+                  </Link>
+                </div>
+              )}
+
+
+
+
               {/* <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                         <Link to="./ProjectsHome">
                            <div class="Services-box">
@@ -120,17 +165,24 @@ class AdminPanelHome extends PureComponent {
                            </div>
                         </Link>
                      </div> */}
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                <Link to="./TourGuideDashboard">
-                  <div class="Services-box">
-                    <i>
-                      <img src={customerServPic} alt="#" id="icons" />
-                    </i>
-                    <h3>Quản lí Tour/Vé</h3>
-                    <p>Quản lí dịch vụ tour/vé của du khách</p>
-                  </div>
-                </Link>
-              </div>
+
+
+              {isStaff && (
+
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <Link to="./TourGuideDashboard">
+                    <div class="Services-box">
+                      <i>
+                        <img src={customerServPic} alt="#" id="icons" />
+                      </i>
+                      <h3>Quản lí Tour/Vé</h3>
+                      <p>Quản lí dịch vụ tour/vé của du khách</p>
+                    </div>
+                  </Link>
+                </div>
+
+
+              )}
               {/* <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                         <Link to="./AllAdoptions">
                            <div class="Services-box">
@@ -140,28 +192,36 @@ class AdminPanelHome extends PureComponent {
                            </div>
                         </Link>
                      </div> */}
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                <Link to="./animaldashboard">
-                  <div class="Services-box">
-                    <i>
-                      <img src={animalPic} alt="#" id="icons" />
-                    </i>
-                    <h3>Quản lí Animal</h3>
-                    <p>Quản lí thông tin Zoo</p>
-                  </div>
-                </Link>
-              </div>
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                <Link to="./categorydashboard">
-                  <div class="Services-box">
-                    <i>
-                      <img src={animalPic} alt="#" id="icons" />
-                    </i>
-                    <h3>Management Category</h3>
-                    <p>Quản lí thông tin Zoo</p>
-                  </div>
-                </Link>
-              </div>
+
+              {isTrainer && (
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <Link to="./animaldashboard">
+                    <div class="Services-box">
+                      <i>
+                        <img src={animalPic} alt="#" id="icons" />
+                      </i>
+                      <h3>Quản lí Animal</h3>
+                      <p>Quản lí thông tin Zoo</p>
+                    </div>
+                  </Link>
+                </div>
+
+              )}
+
+              {isTrainer && (
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <Link to="./categorydashboard">
+                    <div class="Services-box">
+                      <i>
+                        <img src={animalPic} alt="#" id="icons" />
+                      </i>
+                      <h3>Management ZooCategory</h3>
+                      <p>Quản lí thông tin zoocategory</p>
+                    </div>
+                  </Link>
+                </div>
+              )}
+
             </div>
           </div>
         </div>

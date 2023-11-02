@@ -19,4 +19,5 @@ router.delete("/logout", logoutUser );
 // Needs cookie containing sessionID
 router.get("/authchecker", authChecker );
 
+
 module.exports = router;

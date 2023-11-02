@@ -59,7 +59,7 @@ router.put('/accountzootrainers/update/:id',(req,res)=>{
     Accounts.findByIdAndUpdate(
         req.params.id,
         {
-            $set:{isTrainer: false}
+            $set:{isTrainer: false, isUser: true}
         },
         (err,post)=>{
             if(err){
@@ -73,18 +73,20 @@ router.put('/accountzootrainers/update/:id',(req,res)=>{
     );
 });
 
+
+
 //delete post
 
-router.delete('/accountzootrainers/delete/:id', (req,res)=>{
-    Accounts.findByIdAndRemove(req.params.id).exec((err,deletedAccountZootrainer) => {
-        if(err) return res.status(400).json({
-            message:"Delete unsuccesful",err
-        });
+// router.delete('/accountzootrainers/delete/:id', (req,res)=>{
+//     Accounts.findByIdAndRemove(req.params.id).exec((err,deletedAccountZootrainer) => {
+//         if(err) return res.status(400).json({
+//             message:"Delete unsuccesful",err
+//         });
 
-        return res.json({
-            message:"Delete Succesfull", deletedAccountZootrainer
-        });
-    });
-});
+//         return res.json({
+//             message:"Delete Succesfull", deletedAccountZootrainer
+//         });
+//     });
+// });
 
 module.exports = router;   
