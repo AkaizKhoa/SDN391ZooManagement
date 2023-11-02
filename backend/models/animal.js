@@ -54,13 +54,12 @@ const animalSchema = new mongoose.Schema({
   Time_Of_Treatment_And_Medical_Care: {
     type: String,
   },
-  Current_Enclosure_ID: {
-    type: String,
-    required: true,
-  },
   Adoptability: {
     type: String,
     required: true,
+  },
+  Food_Waste_At_Meal: {
+    type: Number,
   },
 });
 

@@ -15,33 +15,25 @@ class AdminPanelHome extends PureComponent {
   constructor(props) {
     super(props);
 
-
     this.state = {
-      userData: null // Khởi tạo userData là null
+      userData: null, // Khởi tạo userData là null
     };
   }
 
-
   componentDidMount() {
     // Lấy dữ liệu từ Local Storage
-    const userData = JSON.parse(localStorage.getItem('userData'));
+    const userData = JSON.parse(localStorage.getItem("userData"));
     if (userData) {
       this.setState({ userData });
     }
   }
 
-
   render() {
-    
-
     const isAdmin = this.state.userData && this.state.userData.isAdmin;
-    console.log(this.state.userData);
+
     const isStaff = this.state.userData && this.state.userData.isStaff;
 
     const isTrainer = this.state.userData && this.state.userData.isTrainer;
-
-
-
 
     return (
       <div className="admin-body" id="admin-id">
@@ -64,12 +56,7 @@ class AdminPanelHome extends PureComponent {
               </div>
             </div>
             <div class="row">
-
-
-
-
               {isAdmin && (
-
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                   <Link to="./EmployeeDash">
                     <div class="Services-box">
@@ -96,7 +83,6 @@ class AdminPanelHome extends PureComponent {
                 </div>
               )}
               {isAdmin && (
-
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                   <Link to="./">
                     <div class="Services-box">
@@ -123,7 +109,6 @@ class AdminPanelHome extends PureComponent {
               </div> */}
 
               {isStaff && (
-
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                   <Link to="./ManagementArea">
                     <div class="Services-box">
@@ -137,9 +122,7 @@ class AdminPanelHome extends PureComponent {
                 </div>
               )}
 
-
               {isTrainer && (
-
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                   <Link to="./medicalDashboard">
                     <div class="Services-box">
@@ -153,9 +136,6 @@ class AdminPanelHome extends PureComponent {
                 </div>
               )}
 
-
-
-
               {/* <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                         <Link to="./ProjectsHome">
                            <div class="Services-box">
@@ -166,9 +146,7 @@ class AdminPanelHome extends PureComponent {
                         </Link>
                      </div> */}
 
-
               {isStaff && (
-
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                   <Link to="./TourGuideDashboard">
                     <div class="Services-box">
@@ -180,8 +158,6 @@ class AdminPanelHome extends PureComponent {
                     </div>
                   </Link>
                 </div>
-
-
               )}
               {/* <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                         <Link to="./AllAdoptions">
@@ -205,10 +181,9 @@ class AdminPanelHome extends PureComponent {
                     </div>
                   </Link>
                 </div>
-
               )}
 
-              {isTrainer && (
+              {isStaff && (
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                   <Link to="./categorydashboard">
                     <div class="Services-box">
@@ -221,7 +196,6 @@ class AdminPanelHome extends PureComponent {
                   </Link>
                 </div>
               )}
-
             </div>
           </div>
         </div>

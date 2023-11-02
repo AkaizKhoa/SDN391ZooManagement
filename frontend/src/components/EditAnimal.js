@@ -4,7 +4,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "../CSS/EditAnimal.css";
-import { withRouter } from "react-router-dom/cjs/react-router-dom";
 import { toast } from "react-toastify";
 
 export default class EditAnimal extends Component {
@@ -19,6 +18,7 @@ export default class EditAnimal extends Component {
       Date_Of_Treatment_And_Medical_Care: "",
       Time_Of_Treatment_And_Medical_Care: "",
       Current_Enclosure_ID: "",
+      Food_Waste_At_Meal: "",
       Adoptability: "false",
     };
   }
@@ -43,6 +43,7 @@ export default class EditAnimal extends Component {
       Date_Of_Treatment_And_Medical_Care,
       Time_Of_Treatment_And_Medical_Care,
       Current_Enclosure_ID,
+      Food_Waste_At_Meal,
       Adoptability,
     } = this.state;
 
@@ -55,18 +56,23 @@ export default class EditAnimal extends Component {
       Date_Of_Treatment_And_Medical_Care: Date_Of_Treatment_And_Medical_Care,
       Time_Of_Treatment_And_Medical_Care: Time_Of_Treatment_And_Medical_Care,
       Current_Enclosure_ID: Current_Enclosure_ID,
+      Food_Waste_At_Meal: Food_Waste_At_Meal,
       Adoptability: Adoptability,
     };
 
-    console.log(data);
-
-    axios.put(`http://localhost:8015/animal/update/${id}`, data).then((res) => {
-      if (res.data.success) {
-        // alert("Animal Portfolio Updated Successfully!");
-        toast.success("update feeding time success");
-        this.props.history.push("/animalDashboard");
-      }
-    });
+    if (data.Food_Waste_At_Meal > 0) {
+      axios
+        .put(`http://localhost:8015/animal/update/${id}`, data)
+        .then((res) => {
+          if (res.data.success) {
+            // alert("Animal Portfolio Updated Successfully!");
+            toast.success("update feeding time success");
+            this.props.history.push("/animalDashboard");
+          }
+        });
+    } else {
+      toast.error("the food waste must greater than 0");
+    }
   };
 
   componentDidMount() {
@@ -91,6 +97,8 @@ export default class EditAnimal extends Component {
             res.data.post.Time_Of_Treatment_And_Medical_Care,
 
           Current_Enclosure_ID: res.data.post.Current_Enclosure_ID,
+
+          Food_Waste_At_Meal: res.data.post.Food_Waste_At_Meal,
 
           Adoptability: "false",
         });
@@ -133,6 +141,27 @@ export default class EditAnimal extends Component {
                   placeholder="Enter The Feeding_And_Watering_Time:"
                   value={this.state.Feeding_And_Watering_Time}
                   onChange={this.handleInputChange}
+                />
+              </div>
+              <div className="form-group" style={{ marginBottom: "15px" }}>
+                <label style={{ marginBottom: "5px" }} id="chamForm">
+                  Feeding Food(kg)
+                </label>
+                <input
+                  type="text"
+                  id="food_waste"
+                  className="form-control"
+                  name="Food_Waste_At_Meal"
+                  placeholder="Enter The Food_Waste_At_Meal"
+                  value={this.state.Food_Waste_At_Meal}
+                  onChange={(event) => {
+                    const inputValue = event.target.value;
+
+                    // Use regular expression to check if it's a number
+                    if (/^\d+$/.test(inputValue) || inputValue === "") {
+                      this.setState({ Food_Waste_At_Meal: inputValue });
+                    }
+                  }}
                 />
               </div>
               <div className="form-group" style={{ marginBottom: "15px" }}>
