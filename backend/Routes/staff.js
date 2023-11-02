@@ -3,27 +3,27 @@ const Accounts = require('../models/User');
 
 const router = express.Router();
 
-//Create accountzootrainer
-// router.post('/accountzootrainers/create',(req,res)=>{
+//Create accountstaff
+// router.post('/accountstaff/create',(req,res)=>{
 
-//     let newAccountZootrainer = new AccountZootrainers(req.body);
+//     let newAccountstaff = new AccountStaff(req.body);
 
-//     newAccountZootrainer.save((err) => {
+//     newAccountstaff.save((err) => {
 //         if(err){
 //             return res.status(400).json({
 //                 error:err
 //             });
 //         }
 //         return res.status(200).json({
-//             success:"AccountZootrainer Created successfully"
+//             success:"Accountstaff Created successfully"
 //         });
 //     });
 // });
 
-//get accountzootrainer
+//get accountstaff
 
-router.get('/accountzootrainers',(req,res)=>{
-    Accounts.find({isTrainer: true}).exec((err,accountzootrainers) =>{
+router.get('/accountstaffs',(req,res)=>{
+    Accounts.find({isStaff: true}).exec((err,accountstaff) =>{
         if(err){
             return res.status(400).json({
                 error:err
@@ -31,35 +31,35 @@ router.get('/accountzootrainers',(req,res)=>{
         }
         return res.status(200).json({
             success:true,
-            existingAccountZootrainers:accountzootrainers
+            existingAccountStaff: accountstaff
         });
     });
 });
 
 //get a specific post
 
-router.get('/accountzootrainers/:id',(req,res) =>{
+router.get('/accountstaff/:id',(req,res) =>{
     
-    //let accountzootrainerId = req.params.id;
+    //let accountstaffId = req.params.id;
 
-    Accounts.findById(req.params.id,(err,accountzootrainer) =>{
+    Accounts.findById(req.params.id,(err,accountstaff) =>{
         if(err){
             return res.status(400).json({success:false, err});
         }
         return res.status(200).json({
             success:true,
-            accountzootrainer
+            accountstaff
         });
     });
 });
 
 //update posts
 
-router.put('/accountzootrainers/update/:id',(req,res)=>{
+router.put('/accountstaff/update/:id',(req,res)=>{
     Accounts.findByIdAndUpdate(
         req.params.id,
         {
-            $set:{isTrainer: false, isUser: true, isAdmin: false, isStaff: false}
+            $set:{isStaff: false, isUser: true, isAdmin: false, isTrainer: false}
         },
         (err,post)=>{
             if(err){
@@ -77,14 +77,14 @@ router.put('/accountzootrainers/update/:id',(req,res)=>{
 
 //delete post
 
-// router.delete('/accountzootrainers/delete/:id', (req,res)=>{
-//     Accounts.findByIdAndRemove(req.params.id).exec((err,deletedAccountZootrainer) => {
+// router.delete('/accountstaff/delete/:id', (req,res)=>{
+//     Accounts.findByIdAndRemove(req.params.id).exec((err,deletedAccountstaff) => {
 //         if(err) return res.status(400).json({
 //             message:"Delete unsuccesful",err
 //         });
 
 //         return res.json({
-//             message:"Delete Succesfull", deletedAccountZootrainer
+//             message:"Delete Succesfull", deletedAccountstaff
 //         });
 //     });
 // });

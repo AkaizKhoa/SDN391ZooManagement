@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 
-import '../CSS/EmployeeDashboard.css'
+import '../Admin/EmployeeDash'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import { toast } from 'react-toastify';
@@ -55,7 +55,7 @@ export default class Home extends Component {
     })
   }
 
-  
+
   onUpdateStaff = (id) => {
     axios.put(`http://localhost:8015/account/updateStaff/${id}`).then((res) => {
       toast("Change Role Successfully");
@@ -66,7 +66,7 @@ export default class Home extends Component {
 
 
 
- 
+
 
 
 
@@ -101,23 +101,27 @@ export default class Home extends Component {
         <div className="header1">
           <div className="row">
 
-            <div className="col-lg-9 mt-2 mb-2" id="EmpCaption"><b>
-              <h4 className="Shas99HeadingEmpDash">Quản lí tất cả nhân viên</h4>
+            <div className="col-lg-9 mt-2 mb-2" id="EmpCaption">
+              <b>
+                <h4 className="Shas99HeadingEmpDash">Quản lí tất cả nhân viên</h4>
 
-            </b>
+              </b>
               <div className="employeeImg"> </div>
+              <div id="empbtns" style={{ marginTop: '30px', marginBottom: '30px', width: '100%', display: 'flex', justifyContent: 'start' }}>
+                <button className="btn btn-success" style={{ marginLeft: "0", marginTop: "0px", width: "150px" }} >
+                  <a href="/adminpanelhome" style={{ textDecoration: "none", color: "white" }}>
+                    Admin Home
+                  </a>
+                </button>
+
+
+              </div>
             </div>
 
-            <div  id="empbtns" style={{ marginTop: '30px', marginBottom: '30px', marginLeft: '30px', width: '100%' , display: 'flex', justifyContent: 'start'}}>
-            <button className="btn btn-success" style={{ marginLeft: "0", marginTop: "0px", width: "150px" }} >
-              <a href="/adminpanelhome" style={{ textDecoration: "none", color: "white" }}>
-                Admin Home
-              </a>
-            </button>
-          </div>
+
 
             <div className="col-lg-3 mt-2 mb-2" id="shas99SearchBar">
-              
+
               <input style={{ color: '#000' }}
                 className="form-control"
                 type="search"
@@ -150,7 +154,7 @@ export default class Home extends Component {
                 <tr>
                   <th >{index + 1}</th>
                   <td>
-                      {"E" + accounts._id}
+                    {"E" + accounts._id}
                     {/* {this.state.lastID = accounts.eID} */}
                     {localStorage.setItem('foo', accounts.eID)}
                   </td>
@@ -161,15 +165,15 @@ export default class Home extends Component {
                   <td>{accounts.isUser ? 'User' : 'Not a User'}</td>
                   <td>{accounts.date}</td>
                   <td>
-                   
-                  <a className="btn btn-warning" href="#" onClick={() => this.onUpdateUser(accounts._id)} id="shasDelete">
-                     &nbsp;SetUser
+
+                    <a className="btn btn-warning" href="#" onClick={() => this.onUpdateUser(accounts._id)} id="shasDelete">
+                      &nbsp;SetUser
                     </a>
                     <a className="btn btn-danger" href="#" onClick={() => this.onUpdateTrainer(accounts._id)} id="shasDelete">
-                     &nbsp;SetTrainer
+                      &nbsp;SetTrainer
                     </a>
                     <a className="btn btn-primary" href="#" onClick={() => this.onUpdateStaff(accounts._id)} id="shasDelete">
-                     &nbsp;SetStaff
+                      &nbsp;SetStaff
                     </a>
                   </td>
                 </tr>
@@ -182,7 +186,7 @@ export default class Home extends Component {
 
 
           </table>
-        
+
         </div>
         {/* Iwara wena thana */}
 

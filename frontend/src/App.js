@@ -23,7 +23,7 @@ import membersbooking from "./components/MemberBooking";
 
 //Employee Management
 import AdminPanelHome from "./components/AdminPanelHome";
-import EmployeeDashboard from "./components/EmployeeDash";
+import EmployeeDashboard from "./components/Admin/EmployeeDash";
 import EditEmployee from "./components/EditPost";
 import EmployeeDetails from "./components/PostDetails";
 
@@ -61,6 +61,8 @@ import MemberAdoptedAnimals from "./components/MemberAdoptedAnimals";
 
 import ManagementArea from "./components/ManagementArea";
 import ManagementAccountTrainer from "./components/ManagementAccountTrainer";
+import StaffDash from "./components/Admin/StaffDash"
+
 
 import Register from "./components/Register";
 import CategoryDashBoard from "./components/Category/CategoryDashBoard";
@@ -99,6 +101,10 @@ class TourApp extends Component {
           <Route path="/adminpanelhome" component={AdminPanelHome} />
 
           <Route path="/EmployeeDash" component={EmployeeDashboard} />
+          <Route
+            path="/StaffDash"
+            component={StaffDash}
+          />
           <Route path="/edit/employee/:id" component={EditEmployee} />
           <Route path="/employee/add" component={AddEmployee} />
           <Route path="/employee/details/:id" component={EmployeeDetails} />
