@@ -6,25 +6,25 @@ const router = express.Router();
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const path = require("path");
-const helmet = require('helmet');
-const cors = require('cors');
-const bodyparser = require('body-parser');
-
+const helmet = require("helmet");
+const cors = require("cors");
+const bodyparser = require("body-parser");
 
 //Import Routes
-const bookingRoutes =require('./Routes/Bookings');
-const animalRoutes = require('./Routes/animals');
-const enclosureRoutes = require('./Routes/enclosures');
+const bookingRoutes = require("./Routes/Bookings");
+const animalRoutes = require("./Routes/animals");
+const enclosureRoutes = require("./Routes/enclosures");
 const adoptionRouter = require("./Routes/adoptions");
-const profileRoutes = require('./Routes/uprofile');
-const shasPosts = require('./Routes/posts');
-const postDailytast = require('./Routes/salaryroute');
-const postProjects = require('./Routes/projects');
-const researches =require('./Routes/researches');
-const medical =require('./Routes/medicals');
-const cage =require('./Routes/cage');
-const area =require('./Routes/area');
-const zootrainer = require('./Routes/zooTrainer');
+const profileRoutes = require("./Routes/uprofile");
+const shasPosts = require("./Routes/posts");
+const postDailytast = require("./Routes/salaryroute");
+const postProjects = require("./Routes/projects");
+const researches = require("./Routes/researches");
+const medical = require("./Routes/medicals");
+const cage = require("./Routes/cage");
+const area = require("./Routes/area");
+const zootrainer = require("./Routes/zooTrainer");
+const category = require("./Routes/category");
 
 //App MiddleWare
 app.use(bodyparser.json());
@@ -43,40 +43,45 @@ app.use(medical);
 app.use(cage);
 app.use(area);
 app.use(zootrainer);
+app.use(category);
 //Import me later to dotEnv file
 
 //MongoDB Connect URL
-const DB_URL ='mongodb://127.0.0.1/Zoo';
+const DB_URL = "mongodb://127.0.0.1/Zoo";
 
 const {
-    HOST,
-    PORT,
-    SESS_SECRET,
-    NODE_ENV,
-    IS_PROD,
-    COOKIE_NAME
-  } = require("./config/config");
-  const { MongoURI } = require("./config/database");
-  const MAX_AGE = 1000 * 60 * 60 * 3; // Three hours
-  // const IS_PROD = NODE_ENV === "production";
-  
+  HOST,
+  PORT,
+  SESS_SECRET,
+  NODE_ENV,
+  IS_PROD,
+  COOKIE_NAME,
+} = require("./config/config");
+const { MongoURI } = require("./config/database");
+const MAX_AGE = 1000 * 60 * 60 * 3; // Three hours
+// const IS_PROD = NODE_ENV === "production";
 
-//Establish Connection with Mongoose Server --> ZooMelaka Cluster 
-mongoose.connect(DB_URL,{
+//Establish Connection with Mongoose Server --> ZooMelaka Cluster
+mongoose
+  .connect(DB_URL, {
     useUnifiedTopology: true,
-    useNewUrlParser:true,
-    useFindAndModify: false 
-}).then(()=>{
-    console.log("==================Mongoose Connection Successful===========================");
-}).catch((err)=>{
-    console.log('DB Connnection Error',err);
-})
+    useNewUrlParser: true,
+    useFindAndModify: false,
+  })
+  .then(() => {
+    console.log(
+      "==================Mongoose Connection Successful==========================="
+    );
+  })
+  .catch((err) => {
+    console.log("DB Connnection Error", err);
+  });
 
 // setting up connect-mongodb-session store
 const mongoDBstore = new MongoDBStore({
-    uri: DB_URL,
-    collection: "mySessions"
-  });
+  uri: DB_URL,
+  collection: "mySessions",
+});
 
 // Express Bodyparser
 app.use(express.urlencoded({ extended: false }));
@@ -96,33 +101,32 @@ app.use(
     cookie: {
       maxAge: MAX_AGE,
       sameSite: false,
-      secure: IS_PROD
-    }
+      secure: IS_PROD,
+    },
   })
 );
 
-app.use(helmet())
+app.use(helmet());
 
 // Below corsOptions are for Local development
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: "http://localhost:3000",
   credentials: true,
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
 // Below corsOptions work in deployment as Docker containers
 const corsOptionsProd = {
-  origin: 'http://localhost',
+  origin: "http://localhost",
   credentials: true,
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
 app.use(cors(corsOptions));
-
 
 app.use("/api/users", require("./routes/users"));
 
 //Port establish server
-app.listen(PORT, ()=>{
-    console.log(`App is running on ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`App is running on ${PORT}`);
 });
