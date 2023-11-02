@@ -1,38 +1,27 @@
-const mongoose = require ('mongoose');
+const mongoose = require("mongoose");
 
-const Schema =mongoose.Schema;
-const medicalSchema = new Schema({
-    vname :{
-        type :String,
-        required: true
-
+const Schema = mongoose.Schema;
+const medicalSchema = new Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      require: true,
+    },
+    animal: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Animals",
+      require: true,
     },
 
-    zname :{
-        type :String,
-        required: true
-
+    sinfo: {
+      type: String,
+      required: true,
     },
-    animalID :{
-        type :String,
-        required: true
-
-    },
-    
-    injID:{
-        type:String,
-        required:true
-
-    },
-
-    sinfo :{
-        type :String,
-        required: true
-
-    }
-
-
-
-})
-const Medical = mongoose.model("Medical_Document",medicalSchema);
+  },
+  {
+    timestamps: true,
+  }
+);
+const Medical = mongoose.model("Medical_Document", medicalSchema);
 module.exports = Medical;
