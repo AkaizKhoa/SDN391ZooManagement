@@ -4,7 +4,7 @@ import axios from "axios";
 import "../../CSS/memberdashboard.css";
 import "../../CSS/category.css";
 import "jspdf-autotable";
-
+import { toast } from "react-toastify";
 class CategoryDashBoard extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +50,7 @@ class CategoryDashBoard extends Component {
       })
       .then((res) => {
         if (res.data.success) {
+          toast.success("Add Category Successful");
           this.getAllCategory();
           this.togglePopup();
         }
