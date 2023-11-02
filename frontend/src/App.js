@@ -74,6 +74,9 @@ import AnimalDetails from './components/AnimalDetails';
 import AnimalsforAdoption from './components/AnimalsforAdoption';
 import MemberAdoptedAnimals from './components/MemberAdoptedAnimals';
 
+import ManagementArea from './components/ManagementArea'
+import ManagementAccountTrainer from './components/ManagementAccountTrainer'
+
 import Register from './components/Register';
 
 
@@ -172,8 +175,8 @@ render() {
         <Route path="/animal/update/:id" component={UpdateAnimalPortfolio}/>
         <Route path="/animal/details/:id" component={AnimalDetails}/>
 
-
-        
+        <Route path = "/ManagementArea" component = {ManagementArea}/>
+        <Route path = "/ManagementAccountTrainer" component = {ManagementAccountTrainer}/>
 
         
         <Footer/>

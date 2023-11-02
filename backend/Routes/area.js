@@ -70,22 +70,22 @@ router.get('/area',(req,res)=>{
 
 //Update Areas
 
-// router.put('/area/update/:id',(req,res)=>{
-//     Areas.findByIdAndUpdate(
-//         req.params.id,
-//         {
-//             $set:req.body
-//         },
-//         (err,post)=>{
-//             if(err){
-//                 return res.status(400).json({error:err});
-//             }
-//             return res.status(200).json({
-//                 success:"Updated Successfully!"
-//             });
-//         }
-//     );
-// });
+router.put('/area/update/:id',(req,res)=>{
+    Areas.findByIdAndUpdate(
+        req.params.id,
+        {
+            $set:req.body
+        },
+        (err,post)=>{
+            if(err){
+                return res.status(400).json({error:err});
+            }
+            return res.status(200).json({
+                success:"Updated Successfully!"
+            });
+        }
+    );
+});
 
 //Delete Areas
 

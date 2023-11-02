@@ -6,6 +6,7 @@ const { registerSchema, loginSchema } = require('../utils/userValidations');
 
 exports.isAuth = (req,res,next) => {
   const sessUser = req.session.user;
+  console.log(sessUser);
   if(sessUser) {
       next();
   }

@@ -57,7 +57,7 @@ class AdminPanelHome extends PureComponent {
                      </div>
 
                      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                        <Link to="./EmployeeDash">
+                        <Link to="./ManagementAccountTrainer">
                            <div class="Services-box">
                               <i><img src={employeePic} alt="#" id="icons" /> </i>
                               <h3> Quản lí Zoo Trainer</h3> <br />
@@ -71,7 +71,7 @@ class AdminPanelHome extends PureComponent {
                            <div class="Services-box">
                               <i><img src={employeePic} alt="#" id="icons" /> </i>
                               <h3> Quản lí Staff Account</h3> <br />
-                              <p>Quản lí nhân viên Zoo Trainer </p>
+                              <p>Quản lí nhân viên Staff Account </p>
                            </div>
                         </Link>
                      </div>
@@ -86,6 +86,18 @@ class AdminPanelHome extends PureComponent {
                         </Link>
                      </div>
                      
+                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                        <Link to="./ManagementArea">
+                           <div class="Services-box">
+                              <i><img src={userPic} alt="#" id="icons" /></i>
+                              <h3>Quản lí thông tin khu vực(Staff) </h3>
+                              <p>Quản lí thông tin khu vực </p>
+                           </div>
+                        </Link>
+                     </div>
+
+
+
                      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                         <Link to="./medicalDashboard">
                            <div class="Services-box">

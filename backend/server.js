@@ -24,7 +24,7 @@ const researches =require('./Routes/researches');
 const medical =require('./Routes/medicals');
 const cage =require('./Routes/cage');
 const area =require('./Routes/area');
-
+const zootrainer = require('./Routes/zooTrainer');
 
 //App MiddleWare
 app.use(bodyparser.json());
@@ -42,6 +42,7 @@ app.use(researches);
 app.use(medical);
 app.use(cage);
 app.use(area);
+app.use(zootrainer);
 //Import me later to dotEnv file
 
 //MongoDB Connect URL
