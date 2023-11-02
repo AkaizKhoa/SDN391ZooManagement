@@ -11,11 +11,16 @@ export default class Home extends Component {
 
     this.state = {
       zooAnimal: [],
+      userData: null, // Khởi tạo userData là null
     };
   }
   //Call The Method Using In-Built React Method ComponentDidMount()
   componentDidMount() {
     this.retrieveAnimal();
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (userData) {
+      this.setState({ userData });
+    }
   }
 
   //Method For GET Content For Animal
@@ -57,6 +62,8 @@ export default class Home extends Component {
   //End of function report
 
   render() {
+    const isStaff = this.state.userData && this.state.userData.isStaff;
+
     return (
       <div className="AnimalDashboard-body">
         <div className="container-fluid">
@@ -134,14 +141,18 @@ export default class Home extends Component {
                       <i className="fas fa-feather-alt"></i>&nbsp;<b>Update</b>
                     </a>
 
-                    <a
-                      className="btn btn-light btn-small justify-content-center btn-outline-danger"
-                      href="#"
-                      onClick={() => this.onDelete(zooAnimal._id)}
-                      id="deleteButton"
-                    >
-                      <i className="fas fa-spider"></i>&nbsp;<b>Delete</b>
-                    </a>
+                    {isStaff ? (
+                      // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                      <a
+                        className="btn btn-light btn-small justify-content-center btn-outline-danger"
+                        onClick={() => this.onDelete(zooAnimal._id)}
+                        id="deleteButton"
+                      >
+                        <i className="fas fa-spider"></i>&nbsp;<b>Delete</b>
+                      </a>
+                    ) : (
+                      " "
+                    )}
                   </td>
                 </tr>
               ))}
