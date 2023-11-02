@@ -62,6 +62,8 @@ import ManagementArea from "./components/Staff/ManagementArea";
 import ManagementAccountTrainer from "./components/Staff/ManagementAccountTrainer";
 import StaffDash from "./components/Admin/StaffDash"
 
+import AddNewArea from "./components/Staff/AddNewArea";
+
 
 import Register from "./components/Register";
 import CategoryDashBoard from "./components/Category/CategoryDashBoard";
@@ -139,6 +141,8 @@ class TourApp extends Component {
           <Route path="/animal/details/:id" component={AnimalDetails} />
 
           <Route path="/ManagementArea" component={ManagementArea} />
+
+          <Route path="/AddNewArea" component={AddNewArea} />
           <Route
             path="/ManagementAccountTrainer"
             component={ManagementAccountTrainer}

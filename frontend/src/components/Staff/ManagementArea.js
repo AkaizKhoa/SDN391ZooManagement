@@ -114,7 +114,7 @@ jspdGenerator=()=>{
                     </a>
                     </button>
                     <button className="btn btn-success" style={{marginLeft:"10%", marginTop:"0",width:"150px"}} >
-                    <a href="/" style={{ textDecoration: "none", color: "white" }}>
+                    <a href="/AddNewArea" style={{ textDecoration: "none", color: "white" }}>
                       Add new area
                     </a>
                     </button>
