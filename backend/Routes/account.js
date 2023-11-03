@@ -98,7 +98,7 @@ router.put('/account/updateUser/:id',(req,res)=>{
     Accounts.findByIdAndUpdate(
         req.params.id,
         {
-            $set:{isTrainer: false, isUser: true, isStaff: true}
+            $set:{isTrainer: false, isUser: true, isStaff: false, isAdmin: false}
         },
         (err,post)=>{
             if(err){
