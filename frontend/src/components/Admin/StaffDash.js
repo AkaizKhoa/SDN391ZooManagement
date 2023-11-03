@@ -129,7 +129,7 @@ export default class StaffDash extends Component {
                                     </td>
                                     <td >{accounts.name}</td>
                                     <td>{accounts.email}</td>
-                                    <td>{accounts.isStaff ? 'Trainer' : 'Not a Trainer'}</td>
+                                    <td>{accounts.isStaff ? 'Staff' : 'Not a Staff'}</td>
                                     <td>{accounts.date}</td>
                                     <td>
 
