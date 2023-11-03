@@ -77,7 +77,7 @@ export default class StaffDash extends Component {
 
                         <div className="col-lg-9 mt-2 mb-2" id="EmpCaption">
                             <b>
-                                <h4 className="Shas99HeadingEmpDash">Quản lí tất cả Zoo trainer</h4>
+                                <h4 className="Shas99HeadingEmpDash">Quản lí tất cả Staff</h4>
 
                             </b>
                             <div className="employeeImg"> </div>

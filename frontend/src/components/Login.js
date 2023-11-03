@@ -74,7 +74,14 @@ onSubmit = (e) => {
 
   render() {
     
-    if(this.props.isAuthenticated) {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+
+
+
+
+    if(this.props.isAuthenticated && userData.isUser) {
+      return <Redirect to="/" />
+    }else if(this.props.isAuthenticated){
       return <Redirect to="/adminpanelhome" />
     }
 

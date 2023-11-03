@@ -45,7 +45,7 @@ class TourGuideDashboard extends Component {
       (booking) =>
         booking.CustomerEmail.toLowerCase().includes(searchKey) ||
         booking.CustomerName.toLowerCase().includes(searchKey) ||
-        booking.TourGuideName.toLowerCase().includes(searchKey)
+        booking._id.toLowerCase().includes(searchKey)
     );
     this.setState({ bookings: result });
   }
@@ -116,28 +116,30 @@ class TourGuideDashboard extends Component {
 
               <tr>
                 <th scope="col">#</th>
+                <th scope="col">QR</th>
+
                 <th scope="col">
-                  <b>Khách hàng</b>
+                  <b>Customer</b>
                 </th>
                 <th scope="col">
                   <b>Email</b>
                 </th>
                 <th scope="col">
-                  <b>Phone Number</b>
+                  <b>Phone</b>
                 </th>
                 <th scope="col">
-                  <b>Tour/Vé Option</b>
+                  <b>Type</b>
                 </th>
                 <th scope="col">
-                  <b>Ngày/tháng/năm</b>
+                  <b>Date</b>
                 </th>
                 <th scope="col">
-                  <b>Khung giờ</b>
+                  <b>Time</b>
+                </th>
+                <th scope="col">
+                  <b>Quantity</b>
                 </th>
 
-                <th scope="col">
-                  <b>Hướng dẫn viên</b>{" "}
-                </th>
 
                 <th scope="col">Action</th>
               </tr>
@@ -153,19 +155,16 @@ class TourGuideDashboard extends Component {
                       {index + 1}
                     </a>
                   </th>
+                  <td>{booking._id}</td>
                   <td>{booking.CustomerName}</td>
                   <td>{booking.CustomerEmail}</td>
                   <td>{booking.MobileNumber}</td>
                   <td>{booking.TourOption}</td>
                   <td>{booking.Date}</td>
                   <td>{booking.Time} </td>
-                  <td>{booking.TourGuideName}</td>
+                  <td>{booking.Quantity}</td>
                   <td>
-                    <a className="btn btn-warning" href={`booking/update/${booking._id}`}>
-                      <i className="fa fa-address-card"></i> &nbsp;
-                      Edit &nbsp;
-                    </a>
-                    &nbsp; &nbsp; &nbsp;
+                   
                     <a
                       className="btn btn-danger"
                       href=""
@@ -179,13 +178,8 @@ class TourGuideDashboard extends Component {
           </table>
 
          <div style={{display: 'flex', justifyContent: 'space-around'}}>
-            <button className="btn btn-success">
-              <a href="booking/add" style={{ textDecoration: "none", color: "white" }}>
-                {" "}
-                Add new Tour Booking{" "}
-              </a>
-            </button>
-            <button className="btn btn-success" onClick={this.jspdGenerator}>Generate Report</button>
+            
+         
            
             <button className="btn btn-success" >
               <a href="/adminpanelhome" style={{ textDecoration: "none", color: "white" }}>
