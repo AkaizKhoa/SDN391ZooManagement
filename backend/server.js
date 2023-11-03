@@ -54,7 +54,7 @@ app.use(prices);
 //Import me later to dotEnv file
 
 //MongoDB Connect URL
-const DB_URL = "mongodb://127.0.0.1/Zoo";
+const DB_URL = "mongodb+srv://cubiiwork:5o18YUZbtFu6IfJ8@cluster0.jo9qmot.mongodb.net/Zoo";
 
 const {
   HOST,
