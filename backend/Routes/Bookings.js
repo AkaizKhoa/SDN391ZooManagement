@@ -10,7 +10,7 @@ router.post('/booking/save',(req,res)=>{
 
     let newBooking = new Booking(req.body);
 
-    newBooking.save((err)=>{
+    newBooking.save((err,savedBooking)=>{
 
         if(err){
             return res.status(400).json({
@@ -19,7 +19,8 @@ router.post('/booking/save',(req,res)=>{
 
         }
         return res.status(200).json({
-            success:"Booking saved successfully "
+            success:"Booking saved successfully ",
+            data: savedBooking
         });
         
 

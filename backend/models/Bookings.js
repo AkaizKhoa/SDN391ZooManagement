@@ -25,8 +25,9 @@ const bookingSchema = new mongoose.Schema(
       required: true,
     },
 
-    Price: {
-      type: Number,
+    Prices: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "price",
       require: true,
     },
     Quantiy: {
