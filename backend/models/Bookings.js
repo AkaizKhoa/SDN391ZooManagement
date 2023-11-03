@@ -30,7 +30,7 @@ const bookingSchema = new mongoose.Schema(
       ref: "price",
       require: true,
     },
-    Quantiy: {
+    Quantity: {
       type: Number,
       require: true,
     },
