@@ -47,7 +47,7 @@ app.use(area);
 app.use(zootrainer);
 app.use(category);
 app.use(account);
-app.use(staff)
+app.use(staff);
 //Import me later to dotEnv file
 
 //MongoDB Connect URL
@@ -71,6 +71,8 @@ mongoose
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useFindAndModify: false,
+    useCreateIndex: true,
+    autoIndex: true,
   })
   .then(() => {
     console.log(
