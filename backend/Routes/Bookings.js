@@ -1,30 +1,36 @@
 const express = require("express");
 const Booking = require("../models/Bookings");
-
 const router = express.Router();
+
+const AuthController = require("../controllers/AuthController");
 
 //Save booking details
 
-router.post("/booking/save", (req, res) => {
-  if (req.body.Quantity <= 0) {
-    return res.status(400).json({
-      error: "Quantity should be greater than zero",
-    });
-  }
-  let newBooking = new Booking(req.body);
-
-  newBooking.save((err, savedBooking) => {
-    if (err) {
+router.post(
+  "/booking/save",
+  AuthController.isAuth,
+  AuthController.restrictTo(),
+  (req, res) => {
+    if (req.body.Quantity <= 0) {
       return res.status(400).json({
-        error: err,
+        error: "Quantity should be greater than zero",
       });
     }
-    return res.status(200).json({
-      success: "Booking saved successfully ",
-      data: savedBooking,
+    let newBooking = new Booking(req.body);
+
+    newBooking.save((err, savedBooking) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
+      return res.status(200).json({
+        success: "Booking saved successfully ",
+        data: savedBooking,
+      });
     });
-  });
-});
+  }
+);
 
 //get specific booking detail
 
