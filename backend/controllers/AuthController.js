@@ -1,80 +1,85 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/User"); // User model
-const Joi = require('@hapi/joi');
-const { registerSchema, loginSchema } = require('../utils/userValidations');
+const Joi = require("@hapi/joi");
+const { registerSchema, loginSchema } = require("../utils/userValidations");
 
-
-exports.isAuth = (req,res,next) => {
-  if(sessUser) {
-      next();
-  }
-  else {
-      err = res.status(401).json("You Need to Be Logged in to do this. Access Denied ")
-      return err;
+exports.isAuth = (req, res, next) => {
+  if (sessUser) {
+    next();
+  } else {
+    err = res
+      .status(401)
+      .json("You Need to Be Logged in to do this. Access Denied ");
+    return err;
   }
 };
 
 exports.registerUser = (req, res) => {
   const { name, email, password } = req.body;
 
-  const result = registerSchema.validate({ name, email, password});
-  if(!result.error) {
+  const result = registerSchema.validate({ name, email, password });
+  if (!result.error) {
+    // Check for existing user
+    User.findOne({ email: email }).then((user) => {
+      if (user) return res.status(400).json("User already exists");
 
-      // Check for existing user
-      User.findOne({ email: email }).then((user) => {
-        if (user) return res.status(400).json("User already exists");
-
-        //New User created
-        const newUser = new User({          
-          name,
-          email,
-          password
-        });
-
-        //Password hashing
-        bcrypt.genSalt(12, (err, salt) =>
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-
-            newUser.password = hash;
-            // Save user
-            newUser
-              .save()
-              .then(
-                res.json("Successfully Registered")
-              )
-              .catch((err) => console.log(err));
-          })
-        );
+      //New User created
+      const newUser = new User({
+        name,
+        email,
+        password,
       });
+
+      //Password hashing
+      bcrypt.genSalt(12, (err, salt) =>
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+
+          newUser.password = hash;
+          // Save user
+          newUser
+            .save()
+            .then(res.json("Successfully Registered"))
+            .catch((err) => console.log(err));
+        })
+      );
+    });
   } else {
     res.status(422).json(result.error.details[0].message);
   }
-
 };
 
 exports.loginUser = (req, res) => {
   const { email, password } = req.body;
 
   // basic validation
-  const result = loginSchema.validate({ email, password});
-  if(!result.error) {
+  const result = loginSchema.validate({ email, password });
+  if (!result.error) {
     //check for existing user
     User.findOne({ email }).then((user) => {
       if (!user) return res.status(400).json("Incorrect Email or Password");
 
       // Validate password
       bcrypt.compare(password, user.password).then((isMatch) => {
-        if (!isMatch) return res.status(400).json("Incorrect Email or Password");
+        if (!isMatch)
+          return res.status(400).json("Incorrect Email or Password");
 
-        const sessUser = { id: user.id, name: user.name, email: user.email, isAdmin: user.isAdmin,  isStaff: user.isStaff,  isTrainer: user.isTrainer,  isUser: user.isUser};
+        const sessUser = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          isStaff: user.isStaff,
+          isTrainer: user.isTrainer,
+          isUser: user.isUser,
+        };
         req.session.user = sessUser; // Auto saves session data in mongo store
 
         res.json(sessUser); // sends cookie with sessionID automatically in response
       });
     });
   } else {
-    console.log(result.error)
+    console.log(result.error);
     res.status(422).json(result.error.details[0].message);
   }
 };
@@ -86,7 +91,7 @@ exports.logoutUser = (req, res) => {
     res.clearCookie("session-id"); // clears cookie containing expired sessionID
     res.send("Logged out successfully");
   });
-}
+};
 
 exports.authChecker = (req, res) => {
   const sessUser = req.session.user;
@@ -96,4 +101,19 @@ exports.authChecker = (req, res) => {
   } else {
     return res.status(401).json({ msg: "Unauthorized" });
   }
+};
+
+exports.restrictTo = () => {
+  return (req, res, next) => {
+    //If account is user
+    if (req.session.user.isUser) {
+      next();
+    } else {
+      return next(
+        res.status(403).json({
+          msg: "You can login",
+        })
+      );
+    }
+  };
 };
