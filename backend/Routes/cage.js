@@ -53,17 +53,19 @@ router.get("/cage/:id", (req, res) => {
 //Get Cages
 
 router.get("/cage", (req, res) => {
-  Cages.find().exec((err, cages) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
+  Cages.find()
+    .populate("area", "name")
+    .exec((err, cages) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        existingCages: cages,
       });
-    }
-    return res.status(200).json({
-      success: true,
-      existingCages: cages,
     });
-  });
 });
 
 //Update Cages

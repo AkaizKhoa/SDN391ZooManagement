@@ -57,16 +57,16 @@ import UpdateAnimalPortfolio from "./components/EditAnimal";
 import AnimalDetails from "./components/AnimalDetails";
 import AnimalsforAdoption from "./components/AnimalsforAdoption";
 import MemberAdoptedAnimals from "./components/MemberAdoptedAnimals";
-import CreateAdoption from "./components/AddAdoption"
+import CreateAdoption from "./components/AddAdoption";
 import ManagementArea from "./components/Staff/ManagementArea";
 import ManagementAccountTrainer from "./components/Staff/ManagementAccountTrainer";
-import StaffDash from "./components/Admin/StaffDash"
+import StaffDash from "./components/Admin/StaffDash";
 
 import AddNewArea from "./components/Staff/AddNewArea";
 
-
 import Register from "./components/Register";
 import CategoryDashBoard from "./components/Category/CategoryDashBoard";
+import CageDashBoard from "./components/cage/CageDashBoard";
 
 class TourApp extends Component {
   render() {
@@ -102,10 +102,7 @@ class TourApp extends Component {
           <Route path="/adminpanelhome" component={AdminPanelHome} />
 
           <Route path="/EmployeeDash" component={EmployeeDashboard} />
-          <Route
-            path="/StaffDash"
-            component={StaffDash}
-          />
+          <Route path="/StaffDash" component={StaffDash} />
           <Route path="/edit/employee/:id" component={EditEmployee} />
           <Route path="/employee/add" component={AddEmployee} />
           <Route path="/employee/details/:id" component={EmployeeDetails} />
@@ -149,6 +146,7 @@ class TourApp extends Component {
           />
 
           <Route path="/categorydashboard" component={CategoryDashBoard} />
+          <Route path="/cagedashboard" component={CageDashBoard} />
 
           <Footer />
         </Router>
